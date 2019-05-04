@@ -1,13 +1,18 @@
-import com.sun.javafx.PlatformUtil;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import com.sun.javafx.PlatformUtil;
+
 public class SignInTest {
 
-    WebDriver driver = new ChromeDriver();
+	WebDriver driver;
 
     @Test
     public void shouldThrowAnErrorIfSignInDetailsAreMissing() {
@@ -19,9 +24,9 @@ public class SignInTest {
 
         driver.findElement(By.linkText("Your trips")).click();
         driver.findElement(By.id("SignIn")).click();
-
+        // switching to frame for sigin action.
+        driver.switchTo().frame(driver.findElement(By.id("modal_window")));
         driver.findElement(By.id("signInButton")).click();
-
         String errors1 = driver.findElement(By.id("errors1")).getText();
         Assert.assertTrue(errors1.contains("There were errors in your submission"));
         driver.quit();
@@ -36,15 +41,23 @@ public class SignInTest {
     }
 
     private void setDriverPath() {
+    	/*
+    	 * Added if - else block
+    	 */
         if (PlatformUtil.isMac()) {
             System.setProperty("webdriver.chrome.driver", "chromedriver");
         }
-        if (PlatformUtil.isWindows()) {
-            System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
+        else if (PlatformUtil.isWindows()) {
+            System.setProperty("webdriver.chrome.driver", "C:\\Users\\DELL PC\\git\\chromedriver_win32\\chromedriver.exe");
         }
-        if (PlatformUtil.isLinux()) {
+        else if (PlatformUtil.isLinux()) {
             System.setProperty("webdriver.chrome.driver", "chromedriver_linux");
         }
+        Map<String, Object> prefs = new HashMap<String, Object>();
+        prefs.put("profile.default_content_setting_values.notifications", 2);
+        ChromeOptions options = new ChromeOptions();
+        options.setExperimentalOption("prefs", prefs);
+         driver = new ChromeDriver(options);
     }
 
 
