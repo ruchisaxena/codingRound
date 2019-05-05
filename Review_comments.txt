@@ -1,0 +1,32 @@
+Review Comments :
+ 1. All the common methods shoud get access from one place thats why i have created Base class for that (Re-usability).
+ 2. Implemented Page Object Model(POM) , EX: Every screen we have created page class for all the locators and actions realted to that particular screen.
+ 3. Created util package for utility methods.
+ 4. Added apache poi for fetching data from Excel file.
+ 5. WebDriver initialization moved to setDriverPath() because execution wil start from @BeforeMethod annotataion.
+ 6. for signIn functionality we have to have frame.
+ 
+ 
+ Recommandation :
+  
+  1. Instead of waitFor() method we should use implict/explict wait because Thread waits for mentioned time even though element is already visible or not yet visible.
+  2. Given code in FlightBookingTEst.java :
+     
+	  List<WebElement> originOptions = driver.findElement(By.id("ui-id-1")).findElements(By.tagName("li"));
+        originOptions.get(0).click();
+		
+	Instead of passing index value to click we should use following code :
+     
+        List<WebElement> originOptions = driver.findElement(By.id("ui-id-1")).findElements(By.tagName("li"));        
+        String locationName = "";
+        for(int i=0;i<originOptions.size();i++) {
+        	String text = originOptions.get(i).getText();
+        	if(text.equalsIgnoreCase(locationName)) {
+        		originOptions.get(i).click();
+        	}
+        }	 
+ 
+ 
+ Concern :
+   
+          As i was fully occupied with some personal work this weekend i am not able to finish FlightBookingTEst scenario.
