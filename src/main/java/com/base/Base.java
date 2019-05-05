@@ -2,6 +2,7 @@ package com.base;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -11,6 +12,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 
 import com.sun.javafx.PlatformUtil;
+import com.utils.TestUtils;
 
 public class Base {
 	
@@ -38,7 +40,9 @@ public class Base {
          driver = new ChromeDriver(options);
          driver.get("https://www.cleartrip.com/");
          driver.manage().window().maximize();
-         driver.manage().timeouts();
+         driver.manage().timeouts().pageLoadTimeout(TestUtils.PAGE_LOAD_TIMEOUT, TimeUnit.SECONDS);
+         driver.manage().timeouts().implicitlyWait(TestUtils.IMPLESIT_WAIT,TimeUnit.SECONDS);
+         
     }
 	
 	

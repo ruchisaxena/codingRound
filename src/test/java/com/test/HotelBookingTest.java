@@ -1,10 +1,12 @@
 package com.test;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.base.Base;
 import com.pages.HotelSearchPage;
+import com.utils.TestUtils;
 
 public class HotelBookingTest extends Base{
 
@@ -15,11 +17,17 @@ public class HotelBookingTest extends Base{
 		initialization();
 		hotelSearch = new HotelSearchPage(driver);
 	}
+	
+	@DataProvider
+	public Object[][] getHotelSearchData(){
+		Object[][] data = TestUtils.getTestData("Sheet1");
+		return data;
+	}
 
-    @Test
-    public void shouldBeAbleToSearchForHotels() {
+    @Test(dataProvider = "getHotelSearchData")
+    public void shouldBeAbleToSearchForHotels(String where, String travlleres) {
     	hotelSearch.clickOnHotelLink();
-    	hotelSearch.searchForHotel("Indiranagar, Bangalore", "1 room, 2 adults");
+    	hotelSearch.searchForHotel(where, travlleres);
     	
     }
 

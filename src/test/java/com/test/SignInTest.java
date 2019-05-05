@@ -22,7 +22,6 @@ public class SignInTest  extends Base{
     @Test
     public void shouldThrowAnErrorIfSignInDetailsAreMissing() {    	
     	String errMsg = "There were errors in your submission";
-        waitFor(2000);
         sIn.clickOnYourTrips();
         sIn.clickOnSignIn();
         sIn.switchToFrame();
